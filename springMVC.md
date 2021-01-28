@@ -131,6 +131,7 @@ public class HomeController {
 
 <img src="D:\user\notes\picture\springMVC.png" style="zoom: 200%;" >
 
+<<<<<<< HEAD
 ### 九、文件上传
 
 #### 1.导入坐标
@@ -610,3 +611,5 @@ public void login(User user, String code, HttpServletRequest req,HttpServletResp
     }
 }
 ```
+=======
+>>>>>>> 53d381fd6b21186dce033c23d651583a0d7d47b1
