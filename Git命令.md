@@ -1,12 +1,12 @@
-# Git命令
+# Git
 
-### 一、本地库初始化
+## 一、本地库初始化
 
 > 命令 ：**git init**
 >
 > 注意 ：.git 目录中存放的是本地库相关的子目录和文件，不要删除，也不要胡 乱修改。
 
-### 二、设置签名
+## 二、设置签名
 
 > 1. ##### 项目级别、仓库级别签名：仅当前本地库范围内有效
 >
@@ -30,7 +30,7 @@
 >
 > + 二者都没有不允许
 
-### 三、基本操作
+## 三、基本操作
 
 >1. ##### 状态查看
 >
@@ -80,7 +80,7 @@
 >      + 将工作区中的文件和本地库历史记录作比较
 >    + 注意 ：不带文件名比较多个文件
 
-### 四、分支操作
+## 四、分支操作
 
 > 1. ##### 创建分支
 >
@@ -98,7 +98,7 @@
 >
 >    + 命令 ：`git merge [有新内容分支名]`
 
-### 五、创建远程库地址别名
+## 五、创建远程库地址别名
 
 > 1. ##### 查看当前所有远程库别名
 >
@@ -127,16 +127,18 @@
 > 6. ##### 远程登陆
 >
 >    + 进入当前用户的家目录 
->      + 命令 ： **cd ~** 
->
+>      
+> + 命令 ： **cd ~** 
+>      
 >    + 删除.ssh 目录
+>      
 >      + **rm -rvf .ssh** 
 >    + 运行命令生成.ssh 密钥目录 
->      + **ssh-keygen -t rsa -C atguigu2018ybuq@aliyun.com** 
+>   + **ssh-keygen -t rsa -C atguigu2018ybuq@aliyun.com** 
 >      + [**注意：这里****-C** **这个参数是大写的** **C**] 
->
+>    
 >    + 进入.ssh 目录查看文件列表 
->      + 命令 ：**cd .ssh** 
+>   + 命令 ：**cd .ssh** 
 >      + 命令 ：**ls -lF** 
 >
 >    + 查看 id_rsa.pub 文件内容
@@ -154,5 +156,39 @@
 >    + 回到 Git bash 创建远程地址别名 
 >
 >      + 命令 ：**git remote add origin_ssh git@github.com:atguigu2018ybuq/huashan.git** 
->
+>    
 >    + 推送文件进行测试
+
+## 六、eclipse中整合git案例
+
+### 1.创建远程仓库
+
+<img src="D:\user\notes\picture\git01.png">
+
+<img src="D:\user\notes\picture\git02.png">
+
+### 2.在eclipse中获取密钥
+
+<img src="D:\user\notes\picture\git03.png">
+
+### 3.将密钥添加到github
+
+<img src="D:\user\notes\picture\git04.png">
+
+<img src="D:\user\notes\picture\git05.png">
+
+### 4.在eclipse中设置签名
+
+<img src="D:\user\notes\picture\git06.png">
+
+### 5.克隆一个远程仓库到本地
+
+<img src="D:\user\notes\picture\git07.png">
+
+<img src="D:\user\notes\picture\git08.png">
+
+### 6.提交代码
+
+<img src="D:\user\notes\picture\git09.png">
+
+<img src="D:\user\notes\picture\git10.png">
