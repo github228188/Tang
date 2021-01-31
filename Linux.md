@@ -141,6 +141,7 @@
 > + 常用选项
 >   + -a ：显示当前目录所有的文件和目录，包括隐藏的。 
 >   + -l ：以列表的方式显示信息
+>   + -h : 以人能看懂的方式显示
 
 ### 3.cd 命令
 
@@ -337,3 +338,398 @@
 > + 特别说明 
 >   + 由于 locate 指令基于数据库进行查询，所以第一次运行前，必须使用 updatedb 指令创建 locate 数 据库。
 
+### 23.grep命令和管道符号 |
+
+> + 基本语法
+>   + grep [选项] 查找内容 源文件
+
+<img src="D:\user\notes\picture\grep01.png">
+
+### 24.gzip/gunzip命令
+
+> + 基本语法
+>   + gzip 文件名 (压缩文件，只能将文件压缩为*.gz 文件)
+>   + gunzip 文件.gz (解压缩文件命令)
+> + 细节说明
+>   + 当我们使用 gzip 对文件进行压缩后，不会保留原来的文件
+
+### 24.zip/unzip命令
+
+> + 基本语法
+>   + zip [选项] XXX.zip 将要压缩的内容（压缩文件和目录的命令） 
+>   + unzip [选项] XXX.zip （解压缩文件） 
+>   + zip 常用选项 
+>     + -r：递归压缩，即压缩目录
+>   + unzip 的常用选项 
+>     + -d<目录> ：指定解压后文件的存放目录 
+
+### 25.tar命令
+
+> + 功能描述：**是打包指令**，最后打包后的文件是 .tar.gz 的文件。
+> + 基本语法 
+>   + tar [选项] XXX.tar.gz 打包的内容 （打包目录，压缩后的文件格式.tar.gz)
+> + 选项说明：
+
+<img src="D:\user\notes\picture\tar01.png">
+
+### 26.chown命令
+
+> + 功能描述 ：修改文件所有者
+> + 基本语法 ：chown 用户名 文件名 
+> + chown newowner:newgroup file 改变用户的所有者和所有组 
+
+### 27.groupadd 命令
+
+> + 功能描述 : 添加一个组
+> + 基本语法 ：groupadd 组名
+
+### 28.chgrp 命令
+
+> + 功能描述 ：修改文件的组
+> + 基本语法 ：chgrp 组名 文件名
+> + 选项说明 ：-R 将文件下的所有文件及目录修改组
+
+### 29.usermod命令
+
+> + 功能描述 ：改变用户所在组
+> + 基本语法 ：usermod -g 组名 用户名
+> + usermod -d 目录名 用户名 改变用户登录的初始目录
+
+### 30.chmod命令
+
+> + 功能描述：修改文件的权限
+> + 第一种方式：
+>   + chmod  u=rwx,g=rx,o=x 文件目录名
+>   + chmod o+w 文件目录名
+>   + chmod a-x 文件目录名
+> + 第二种方式：
+>   + 规则：r=4 w=2 x=1 ,rwx=4+2+1=7 
+>   + chmod u=rwx,g=rx,o=x 文件目录名 
+>   + 相当于 chmod 751 文件目录名
+>
+
+### 31.crontab命令
+
+> + 功能描述 ：任务调度，定时任务
+>
+> + 基本语法 ：crontab [选项]
+> + 选项说明 ：
+
+<img src="D:\user\notes\picture\crontab01.png">
+
+> + 操作步骤 ：
+>   + 设置任务调度文件：/etc/crontab 
+>   + 设置个人任务调度。执行 crontab –e 命令。 
+>   + 接着输入任务到调度文件 
+>   + 如：*/1 * * * * ls –l /etc/ > /tmp/to.txt 
+>   + 意思说每小时的每分钟执行 ls –l /etc/ > /tmp/to.txt 命令
+>   + service crond restart 重启调度任务
+
+## 八、Linux 磁盘分区、挂载
+
+### 1.lsblk -f 指令
+
+> + 功能描述：查看磁盘分区的挂载情况
+
+### 2.增加一块硬盘并挂载
+
+> + 虚拟机添加硬盘 
+> + 分区 fdisk /dev/sdb 
+> + 格式化 mkfs -t ext4 /dev/sdb1 
+> + 挂载 先创建一个 /home/newdisk , 挂载 mount /dev/sdb1 /home/newdisk 
+> + 设置可以自动挂载(永久挂载，当你重启系统，仍然可以挂载/home/newdisk)
+> + vim /etc/fstab 
+> + /dev/sdb1 /home/newdisk ext4 defaults 0 0
+
+### 3.分区详细步骤：
+
+> 分区命令 fdisk /dev/sdb 
+>
+> 开始对/sdb 分区 
+>
+> + m 显示命令列表 
+>
+> + p 显示磁盘分区 同 fdisk –l 
+>
+> + n 新增分区 
+>
+> + d 删除分区 
+>
+> + w 写入并退出 
+>
+> 说明： 开始分区后输入 n，新增分区，然后选择 p ，分区类型为主分区。两次回车默认剩余全部空间。最后输入 w 写入分区并退出，若不保存退出输入 q。
+>
+> umount 设备名称 或者 挂载目录 取消挂载
+
+### 4.查询磁盘整体使用情况
+
+> + 基本语法 ：df -h
+
+### 5.查询指定目录的磁盘占用情况
+
+> + 基本语法 ：du -h /目录
+>
+> + 查询指定目录的磁盘占用情况，默认为当前目录 
+>
+>   -s 指定目录占用大小汇总 
+>
+>   -h 带计量单位 
+>
+>   -a 含文件 
+>
+>   --max-depth=1 子目录深度
+>
+>   -c 列出明细的同时，增加汇总值
+
+### 6.常用磁盘指令
+
+#### 1.统计/home 文件夹下文件的个数
+
+> ls -l /home | grep "^-" | wc -l
+
+### 2.统计/home 文件夹下目录的个数 
+
+> ls -l /home | grep "^d" | wc -l
+
+### 3.统计/home 文件夹下文件的个数，包括子文件夹里的 
+
+> ls -lR /home | grep "^-" | wc -l
+
+### 4.统计文件夹下目录的个数，包括子文件夹里的
+
+> ls -lR /home | grep "^d" | wc -l
+
+## 九、网络配置
+
+### 1.修改配置文件
+
+> vi /etc/sysconfig/network-scripts/ifcfg-eth0 
+
+<img src="D:\user\notes\picture\network.png">
+
+> 重启服务 ：service network restart
+
+## 十、进程管理
+
+### 1.ps 指令
+
+> + 常用指令 ：ps -aux | grep xxx
+> + 选项说明 ：
+>   + ps -a : 显示当前终端所有进程
+>   + ps -u : 以用户的格式显示进程信息
+>   + ps -x  : 显示后台进程的参数  
+
+### 2.ps -aux详情
+
+<img src="D:\user\notes\picture\ps01.png">
+
+### 3.ps -ef | more
+
+> + 功能描述：以全格式显示所有进程
+> + 参数说明 : 
+>   + -e 显示所有进程
+>   + 全格式
+> + 思考题：如果我们希望查看 sshd 进程的父进程号是多少，应该怎样查询 ？
+>   + ps -ef | grep sshd
+
+### 4.kill/killall命令
+
+> + 基本语法 : 
+>   + kill [选项] 进程号（通过进程号杀死进程） 
+>   + killall 进程名称 （通过进程名称杀死进程，也支持通配符，这在系统因负载过大而变 得很慢时很有用）
+> + 参数说明 ：
+>   + -9 :表示强迫进程立即停止
+
+### 5.pstree命令
+
+> + 功能描述 ：查看进程树
+> + 基本语法 ： pstree [选项]
+> + 参数说明 ：
+>   + -p :显示进程的 PID
+>   + -u :显示进程的所属用户 
+
+### 6.服务管理
+
+> + 基本语法 ：service 服务名 [start | stop | restart | reload | status] 
+> + service iptables status 查看防火墙的状态
+> + service iptables stop 关闭防火墙
+> + service iptables start 开启防火墙
+> + 说明 ：
+>   + service命令是立即生效，但是系统关机后就失效了
+>   + 在 CentOS7.0 后 不再使用 service ,而是 systemctl
+> + 思考题 ：如何验证端口是否真的被启用了？
+>   + 在window系统的dos命令窗口输入：
+>     + telnet ip 端口号
+> + 列出系统有那些服务：ls -l /etc/init.d/
+
+### 7.开机的流程说明：
+
+> + 开机 --- > BOIS --- > /boot --- > init进程1 --- > 运行级别 --- > 运行级别对应的服务
+
+### 8.chkconfig命令
+
+> + 查询每个运行级别对应的服务状态
+>   + chkconfig --list
+> + 查询指定服务运行级别的服务状态
+>   + chconfig --list | grep sshd
+>   + chconfig 服务名 --list
+> + 修改指定运行级别的状态
+>   + chkconfig -level 运行级别 服务名 [off|on]
+> + 修改所有运行级别的运行状态
+>   + chkconfig 服务名 [off|on]
+> + 注意 ：chkconfig 重新设置服务后自启动或关闭，需要重启机器 reboot 才能生效
+
+### 9.top命令
+
+> + 功能描述 ：显示正在执行的进程
+> + 基本语法 ： top [选项]
+> + 与ps命令的区别：Top 与 ps 最大的不同之处，在于 top 在 执行一段时间可以更新正在运行的的进程
+
+#### 1.参数说明 ：
+
+<img src="D:\user\notes\picture\top02.png">
+
+<img src="D:\user\notes\picture\top01.png">
+
+#### 2.交互操作说明：
+
+<img src="D:\user\notes\picture\top03.png">
+
+#### 3.监听特定的用户
+
+> + top：输入此命令，按回车键，查看执行的进程。 
+>
+> + u：然后输入“u”回车，再输入用户名，即可
+
+#### 4.终止指定的进程
+
+> + top：输入此命令，按回车键，查看执行的进程。 
+>
+> + k：然后输入“k”回车，再输入要结束的进程 ID 号
+
+#### 5.指定系统状态更新的时间(每隔 10 秒自动更新， 默认是 3 秒)
+
+> + top -d 10
+
+### 10.netstat命令
+
+> + 功能描述 ：查看系统网络情况
+> + 基本语法 ：netstat [选项] 
+> + 常用选项 ：netstat -anp （查看所有网络服务）
+> + 参数说明 ： 
+>   + -an 按一定顺序排列输出 
+>   + -p 显示哪个进程在调用
+
+<img src="D:\user\notes\picture\netstat01.png">
+
+## 十一、RPM和YUM
+
+### 1.rpm命令
+
+> + rpm -qa (查询所有安装)
+> + 说明：
+>   + 名称:firefox 
+>   + 版本号：45.0.1-1
+>   + 适用操作系统: el6.centos.x86_64 
+>   + 表示 centos6.x 的 64 位系统 
+>   + 如果是 i686、i386 表示 32 位系统，noarch 表示通用
+
+<img src="D:\user\notes\picture\rpm01.png">
+
+> + 常用命令 ：
+>   + rpm -q 软件包名 （查询软件包是否安装）
+>   + rpm -qi 软件包名 （查询软件包信息）
+>   + rpm -ql 软件包名 （查询软件中的文件）
+>   + rmp -qf  文件全路径名 （查询文件所属的软件包）
+>   + rpm -e RPM的包的名称 （卸i软件）
+>     + 细节说明：
+>       + 如果其他软件包依赖于你卸载的软件包，卸载时则会产生错误信息
+>       + 需 加上--nodeps 强制删除
+>   + rpm -ivh RPM包全路径名称
+>     + 参数说明：
+>       + i=install 安装 
+>       + v=verbose 提示 
+>       + h=hash 进度条 
+
+### 2.安装firefox案例
+
+<img src="D:\user\notes\picture\rpm02.png">
+
+<img src="D:\user\notes\picture\rpm03.png">
+
+<img src="D:\user\notes\picture\rpm04.png">
+
+<img src="D:\user\notes\picture\rpm05.png">
+
+### 3.yum命令
+
+#### 1.CentOS6 的yum源说明
+
+> + ###### `CentOS6`停止维护更新日期2020年11月30日
+>
+> + ###### 2020年12月2日下架了包括官方所有的`CentOS6`源（包括国内的镜像站）
+>
+> + ###### 所以这里使用`centos-vault`作为更新源
+
+#### 2.CentOS6的yum源配置
+
+> + 进入：cd /etc/yum.repo.d
+> + 编辑：vim CentOS-Base.repo
+
+```tex
+[base]
+name=CentOS-6.10 - Base - mirrors.aliyun.com
+failovermethod=priority
+baseurl=http://mirrors.aliyun.com/centos-vault/6.10/os/$basearch/
+gpgcheck=1
+gpgkey=http://mirrors.aliyun.com/centos-vault/RPM-GPG-KEY-CentOS-6
+#released updates
+[updates]
+name=CentOS-6.10 - Updates - mirrors.aliyun.com
+failovermethod=priority
+baseurl=http://mirrors.aliyun.com/centos-vault/6.10/updates/$basearch/
+gpgcheck=1
+gpgkey=http://mirrors.aliyun.com/centos-vault/RPM-GPG-KEY-CentOS-6
+#additional packages that may be useful
+[extras]
+name=CentOS-6.10 - Extras - mirrors.aliyun.com
+failovermethod=priority
+baseurl=http://mirrors.aliyun.com/centos-vault/6.10/extras/$basearch/
+gpgcheck=1  
+gpgkey=http://mirrors.aliyun.com/centos-vault/RPM-GPG-KEY-CentOS-6
+#additional packages that extend functionality of existing packages
+[centosplus] 
+name=CentOS-6.10 - Plus - mirrors.aliyun.com
+failovermethod=priority 
+baseurl=http://mirrors.aliyun.com/centos-vault/6.10/centosplus/$basearch/
+gpgcheck=1
+enabled=0
+gpgkey=http://mirrors.aliyun.com/centos-vault/RPM-GPG-KEY-CentOS-6
+#contrib - packages by Centos Users
+[contrib]
+name=CentOS-6.10 - Contrib - mirrors.aliyun.com
+failovermethod=priority  
+baseurl=http://mirrors.aliyun.com/centos-vault/6.10/contrib/$basearch/
+gpgcheck=1
+enabled=0
+gpgkey=http://mirrors.aliyun.com/centos-vault/RPM-GPG-KEY-CentOS-6
+
+```
+
+#### 3.清楚yum缓存
+
+> + yum clean all
+
+#### 4.建立缓存
+
+> + yum makecache
+
+#### 5.查询
+
+> + yum list | grep xxx (查询yum源是否有xxx)
+> + eg. yum list | grep firefox
+
+#### 6.安装
+
+> + yum install 复制查询出来的带版本的包
+> + eg. yum install firefox.x86_64
