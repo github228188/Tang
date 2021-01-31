@@ -127,20 +127,22 @@
 > 6. ##### 远程登陆
 >
 >    + 进入当前用户的家目录 
->      
+>
 > + 命令 ： **cd ~** 
->      
+>
 >    + 删除.ssh 目录
->      
+>
 >      + **rm -rvf .ssh** 
 >    + 运行命令生成.ssh 密钥目录 
 >   + **ssh-keygen -t rsa -C atguigu2018ybuq@aliyun.com** 
->      + [**注意：这里****-C** **这个参数是大写的** **C**] 
->    
+>      
+> + [**注意：这里****-C** **这个参数是大写的** **C**] 
+>      
 >    + 进入.ssh 目录查看文件列表 
 >   + 命令 ：**cd .ssh** 
->      + 命令 ：**ls -lF** 
->
+>    
+>   + 命令 ：**ls -lF** 
+>    
 >    + 查看 id_rsa.pub 文件内容
 >
 >      + 命令 ：**cat id_rsa.pub**  
@@ -156,7 +158,7 @@
 >    + 回到 Git bash 创建远程地址别名 
 >
 >      + 命令 ：**git remote add origin_ssh git@github.com:atguigu2018ybuq/huashan.git** 
->    
+>   
 >    + 推送文件进行测试
 
 ## 六、eclipse中整合git案例
@@ -192,3 +194,26 @@
 <img src="D:\user\notes\picture\git09.png">
 
 <img src="D:\user\notes\picture\git10.png">
+
+## 七、IDEA中整合git
+
+### 1.IDEA添加git
+
+> file --- > settings
+
+<img src="D:\user\notes\picture\git11.png">
+
+### 2.创建git本地仓库
+
+<img src="D:\user\notes\picture\git12.png">
+
+### 3.提交到本地库
+
+<img src="D:\user\notes\picture\git13.png">
+
+### 4.提交到远程（ctrl + shift + k）
+
+<img src="D:\user\notes\picture\git14.png">
+
+`注：远程仓库一定要是本地提交的时候创建的，不然会被拒绝，如果远程分支在第一次提交到远程之前就存在则需要加--allow-unrelated-histories`
+
