@@ -10,7 +10,9 @@
 
 ### 2.定时关机
 
-> 指令 ：shutdown -h -[关机时间]
+> 指令 ：shutdown -h [关机时间]
+>
+> 细节 ：以分钟为单位
 
 ### 3.重启
 
@@ -21,6 +23,8 @@
 ### 4.把内存中的数据同步到磁盘
 
 > 指令 ：sync
+>
+> 细节 ：每次关机之前都应该同步数据到磁盘，保证数据不丢失
 
 ## 二、用户登录和注销
 
@@ -212,7 +216,7 @@
 > 
 >  + cat 只能浏览文件，而不能修改文件，为了浏览方便，一般会带上 管道命令 | more 
 > 
->  + cat 文件名 | more [分页浏览] 
+>  + cat 文件名 | more （分页浏览）
 
 ### 11.more 命令
 
@@ -277,6 +281,7 @@
 > + 功能描述 ：查看已经执行过历史命令,也可以执行历史指令
 > + 基本语法
 >   + history （查看已经执行过历史命令） 
+>   + ！行号 （执行指令）
 
 ### 19.date 命令
 
@@ -336,7 +341,7 @@
 > + 基本语法
 >   + locate 搜索文件 
 > + 特别说明 
->   + 由于 locate 指令基于数据库进行查询，所以第一次运行前，必须使用 updatedb 指令创建 locate 数 据库。
+>   + `由于 locate 指令基于数据库进行查询，所以第一次运行前，必须使用 updatedb 指令创建 locate 数 据库`。
 
 ### 23.grep命令和管道符号 |
 
@@ -372,6 +377,10 @@
 
 <img src="D:\user\notes\picture\tar01.png">
 
+> + 案例：
+>   + 将xxx.tar.gz解压到目录/opt
+>   + tar -zxvf xxx.tar.gz -C /opt
+
 ### 26.chown命令
 
 > + 功能描述 ：修改文件所有者
@@ -393,7 +402,7 @@
 
 > + 功能描述 ：改变用户所在组
 > + 基本语法 ：usermod -g 组名 用户名
-> + usermod -d 目录名 用户名 改变用户登录的初始目录
+> + `usermod -d 目录名 用户名 改变用户登录的初始目录`
 
 ### 30.chmod命令
 
@@ -408,7 +417,7 @@
 >   + 相当于 chmod 751 文件目录名
 >
 
-### 31.crontab命令
+## 八、crontab任务调度
 
 > + 功能描述 ：任务调度，定时任务
 >
@@ -425,7 +434,16 @@
 >   + 意思说每小时的每分钟执行 ls –l /etc/ > /tmp/to.txt 命令
 >   + service crond restart 重启调度任务
 
-## 八、Linux 磁盘分区、挂载
+> + 案例：定时任务，每分钟都将当前时间写到/tmp/date.txt中
+>   + 编写shell脚本date.sh
+>     + date "+%Y-%m-%d %H:%M:%S >> /tmp/date.txt
+>   + 给date.sh可执行权限
+>     + chmod 774 date.sh
+>   + 编写任务调度
+>     + crontab -e
+>     + 添加 */1 * * * * /home/date.sh
+
+## 九、Linux 磁盘分区、挂载
 
 ### 1.lsblk -f 指令
 
@@ -434,12 +452,12 @@
 ### 2.增加一块硬盘并挂载
 
 > + 虚拟机添加硬盘 
-> + 分区 fdisk /dev/sdb 
-> + 格式化 mkfs -t ext4 /dev/sdb1 
+> + 分区 ： fdisk /dev/sdb 
+> + 格式化  ：mkfs -t ext4 /dev/sdb1 
 > + 挂载 先创建一个 /home/newdisk , 挂载 mount /dev/sdb1 /home/newdisk 
 > + 设置可以自动挂载(永久挂载，当你重启系统，仍然可以挂载/home/newdisk)
 > + vim /etc/fstab 
-> + /dev/sdb1 /home/newdisk ext4 defaults 0 0
+> + 添加 ：/dev/sdb1 /home/newdisk ext4 defaults 0 0
 
 ### 3.分区详细步骤：
 
@@ -499,7 +517,7 @@
 
 > ls -lR /home | grep "^d" | wc -l
 
-## 九、网络配置
+## 十、网络配置
 
 ### 1.修改配置文件
 
@@ -509,7 +527,7 @@
 
 > 重启服务 ：service network restart
 
-## 十、进程管理
+## 十一、进程管理
 
 ### 1.ps 指令
 
@@ -523,12 +541,16 @@
 
 <img src="D:\user\notes\picture\ps01.png">
 
+> STAT：进程状态，其中 S-睡眠，s-表示该进程是会话的先导进程，N-表示进程拥有比普通优先 
+>
+> 级更低的优先级，R-正在运行，D-短期等待，Z-僵死进程，T-被跟踪或者被停止等等
+
 ### 3.ps -ef | more
 
 > + 功能描述：以全格式显示所有进程
 > + 参数说明 : 
 >   + -e 显示所有进程
->   + 全格式
+>   + -f 全格式
 > + 思考题：如果我们希望查看 sshd 进程的父进程号是多少，应该怎样查询 ？
 >   + ps -ef | grep sshd
 
@@ -561,6 +583,7 @@
 >   + 在window系统的dos命令窗口输入：
 >     + telnet ip 端口号
 > + 列出系统有那些服务：ls -l /etc/init.d/
+> + setup (修改服务)
 
 ### 7.开机的流程说明：
 
@@ -622,7 +645,7 @@
 
 <img src="D:\user\notes\picture\netstat01.png">
 
-## 十一、RPM和YUM
+## 十二、RPM和YUM
 
 ### 1.rpm命令
 
